@@ -3,8 +3,9 @@ Design visualizer for aircraft design
 
 # Instalation of environment 
 Run miniconda or anaconda command prompt/power shell  
-conda create -n d3vad_env python=3.9 tigl3 –c dlr-sc  
+conda create -n d3vad_env python=3.9 -c conda-forge  
 conda activate d3vad_env  
+conda install tigl3 –c dlr-sc 
 pip install pyside6  
 pip install openmesh  
 pip install pyopengl  
