@@ -101,19 +101,23 @@ class ViewCommand(Command):
         rot = QQuaternion.fromEulerAngles(180.0, 0.0, 0.0)
         self.setView(rot)
     def onIso(self):
-        mv = QMatrix4x4(0.628121, -0.777908, -0.0179731, -34.2965, 0.224517, 0.159073, 0.961399, -24.0275, -0.745021, -0.60791, 0.27457, 2.20723e-07, 0, 0, 0, 1)
-        #rot = QQuaternion.fromEulerAngles(30.0, 30.0, 30.0)
-        #mv.rotate(rot)
-        #rot = QQuaternion.fromEulerAngles(-90.0, 0.0, 0.0)
-        #mv.rotate(rot)
+        #mv = QMatrix4x4(0.628121, -0.777908, -0.0179731, -34.2965, 0.224517, 0.159073, 0.961399, -24.0275, -0.745021, -0.60791, 0.27457, 2.20723e-07, 0, 0, 0, 1)
+        mv = QMatrix4x4()
+        rot = QQuaternion.fromEulerAngles(30.0, 30.0, 30.0)
+        mv.rotate(rot)
+        rot = QQuaternion.fromEulerAngles(-90.0, 0.0, 0.0)
+        mv.rotate(rot)
         self.glwin.mv = mv
         self.glwin.update()
     def onIsoNeg(self):
-        mv = QMatrix4x4(-0.684249, 0.724864, -0.0798536, 32.2494, -0.352872, -0.233278, 0.906125, 9.49791, 0.638189, 0.648193, 0.415404, -2.00351e-06, 0, 0, 0, 1)
-        #rot = QQuaternion.fromEulerAngles(30.0, 30.0, 30.0)
-        #mv.rotate(rot)
-        #rot = QQuaternion.fromEulerAngles(-90.0, 0.0, 0.0)
-        #mv.rotate(rot)
+        #mv = QMatrix4x4(-0.684249, 0.724864, -0.0798536, 32.2494, -0.352872, -0.233278, 0.906125, 9.49791, 0.638189, 0.648193, 0.415404, -2.00351e-06, 0, 0, 0, 1)
+        mv = QMatrix4x4()
+        rot = QQuaternion.fromEulerAngles(30.0, 30.0, 30.0)
+        mv.rotate(rot)
+        rot = QQuaternion.fromEulerAngles(90.0, 0.0, 0.0)
+        mv.rotate(rot)
+        rot = QQuaternion.fromEulerAngles(0.0, 180.0, 0.0)
+        mv.rotate(rot)
         self.glwin.mv = mv
         self.glwin.update()
     def onSave(self):
