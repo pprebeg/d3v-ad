@@ -21,6 +21,8 @@ try:
     from core.geometry import Geometry
     # d3v-ad
     from aircraftcomponent import *
+    from bramoflaw import BraMoFlyingWing
+
 except BaseException as error:
     print('An exception occurred: {}'.format(error))
 except:
@@ -30,7 +32,7 @@ class AircraftDesignCommand(Command):
     def __init__(self):
         super().__init__()
         self._app = QApplication.instance()
-        self._app.registerIOHandler(HullFormImporter())
+        self._app.registerIOHandler(AircraftDesignImporter())
         self.aircraft_components:Dict[uuid4, AircraftComponent]={}
         self.selected_component=None
         self.active_component = None
@@ -63,10 +65,10 @@ class AircraftDesignCommand(Command):
     def onImportComponent(self):
         fname = QFileDialog.getOpenFileName(self.mainwin,
                                             'Select CPACS file for import','../../../../examples/ad',
-                                            "hull form files (*.xml *.obj *.stl)")
+                                            "hull form files (*.xml *.obj *.stl *txt)")
         fname = fname[0]
         if fname != "":
-            hfi = HullFormImporter(True)
+            hfi = AircraftDesignImporter(True)
             hf = hfi.importGeometry(fname)
             if hf is not None:
                 hf.emit_geometry_built()
@@ -148,7 +150,7 @@ class AircraftDesignCommand(Command):
     def glwin(self):
         return self.mainwin.glWin
 
-class HullFormImporter(IOHandler):
+class AircraftDesignImporter(IOHandler):
     def __init__(self,force_import=False):
         super().__init__()
         self.force_import=force_import
@@ -164,6 +166,8 @@ class HullFormImporter(IOHandler):
                 ta = TiglAircraft(fileName)
             elif file_extension == ".stl" or file_extension == ".obj":
                 ta = AircraftComponentFromMesh(fileName,filename_no_ext)
+            elif file_extension == ".txt":
+                ta = BraMoFlyingWing(fileName,filename_no_ext)
         if ta is not None:
             return ta
 
@@ -174,10 +178,10 @@ class HullFormImporter(IOHandler):
         pass
 
     def getExportFormats(self):
-       return (".hgf",".obj",".stl")
+       return (".xml")
 
     def getImportFormats(self):
-        return (".hgf",".huf")
+        return (".xml")
 
 
 

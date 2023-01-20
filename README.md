@@ -1,7 +1,7 @@
 # d3v-ad
 Design visualizer for aircraft design 
 
-# Instalation of environment 
+## Instalation of environment 
 Run miniconda or anaconda command prompt/power shell  
 conda create -n d3vad_env python=3.9 -c conda-forge  
 conda activate d3vad_env  

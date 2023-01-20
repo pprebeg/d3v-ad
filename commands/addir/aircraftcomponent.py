@@ -70,7 +70,6 @@ class TiglComponent(AircraftComponent):
         super().__init__()
         self._config = config
         self._uid = UID
-        self.regenerate_component()
         self.name = self.UID
 
     @property
@@ -106,11 +105,13 @@ class TiglComponent(AircraftComponent):
 class TiglComponentWing(TiglComponent):
     def __init__(self, config,UID):
         super().__init__(config,UID)
+        self.regenerate_component()
 
 
 class TiglComponentFuselage(TiglComponent):
     def __init__(self, config,UID):
         super().__init__(config,UID)
+        self.regenerate_component()
 
 
 class TiglAircraft(TiglComponent):
@@ -122,6 +123,7 @@ class TiglAircraft(TiglComponent):
         super().__init__(config, config.get_uid())
         self._components:List[TiglComponent]=[]
         self.get_tigl_aircraft_components()
+        self.regenerate_component()
         self.emit_aircraft_componets_build()
 
 
@@ -181,13 +183,13 @@ class TiglAircraft(TiglComponent):
         pass
 
     def regenerate_component(self):
-        self.mesh=om.TriMesh()
-        self.mesh.add_vertex(np.array([0.,0.,0.]))
-        self.mesh.add_vertex(np.array([0., 0., 0.]))
-        self.mesh.add_vertex(np.array([0., 0., 0.]))
+        self.sub_geometry.clear()
+        for component in self._components:
+            self.sub_geometry.append(component)
         pass
 
     def emit_aircraft_componets_build(self):
+        self.emit_geometry_built()
         for ac in self._components:
             ac.emit_geometry_built()
         pass

@@ -8,7 +8,7 @@ from OCC.Core.BRepPrimAPI import (
 )
 import numpy as np
 
-def get_open_mesh_from_TopoDS_using_shape_tesselator(shape:TopoDS_Shape,mesh_quality=0.2)->om.TriMesh:
+def get_open_mesh_from_TopoDS_using_shape_tesselator(shape:TopoDS_Shape,mesh_quality=0.5)->om.TriMesh:
     tess = ShapeTesselator(shape)
     tess.Compute(compute_edges=True,mesh_quality=mesh_quality)
     vpos = tess.GetVerticesPositionAsTuple()
